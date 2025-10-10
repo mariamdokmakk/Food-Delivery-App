@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_delivery/data/models/menu_item.dart';
 
@@ -11,7 +9,7 @@ class OffersItem {
   DateTime valid_from;
   DateTime valid_to;
   MenuItem menu_item;
-  
+
   OffersItem({
     required this.id,
     required this.discount_percent,
@@ -21,7 +19,6 @@ class OffersItem {
     required this.valid_to,
     required this.menu_item,
   });
-  
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -41,10 +38,9 @@ class OffersItem {
       discount_percent: map['discount_percent'] as num,
       is_active: map['is_active'] as bool,
       restaurant_id: map['restaurant_id'] as String,
-      valid_from:(map['valid_from']as Timestamp).toDate(),
-      valid_to: (map['valid_to']as Timestamp).toDate(),
-      menu_item: MenuItem.fromMap(map['menu_item'] as Map<String,dynamic>),
+      valid_from: (map['valid_from'] as Timestamp).toDate(),
+      valid_to: (map['valid_to'] as Timestamp).toDate(),
+      menu_item: MenuItem.fromMap(map['menu_item'] as Map<String, dynamic>),
     );
   }
-
 }
