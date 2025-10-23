@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_delivery/data/models/menu_item.dart';
 
-class Order {
+class OrderItem {
   final String id;
   final String userId;
   final String restaurantId;
   final List<MenuItem> items;
   final double totalPrice;
-  final String status; // pending, preparing, delivered
+  final String status;     // pending, preparing, delivered
   final DateTime createdAt;
 
-  Order({
+  OrderItem({
     required this.id,
     required this.userId,
     required this.restaurantId,
@@ -19,9 +19,10 @@ class Order {
     required this.status,
     required this.createdAt,
   });
+  
 
-  factory Order.fromMap(Map<String, dynamic> data) {
-    return Order(
+  factory OrderItem.fromMap(Map<String, dynamic> data) {
+    return OrderItem(
       id: data['id'] ?? '',
       userId: data['userId'] ?? '',
       restaurantId: data['restaurantId'] ?? '',
