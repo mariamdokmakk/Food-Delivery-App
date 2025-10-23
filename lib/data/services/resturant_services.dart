@@ -12,18 +12,18 @@ class ResturantServices {
   //load best seller in resturant -----> already exist in home services
 
 
-  /// دالة للحصول على موقع المستخدم الحالي
+  // function to get user location it doesn't open a map
   static Future<Position> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // التحقق من تفعيل خدمة تحديد الموقع
+    //check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw Exception('Location services are disabled.');
     }
 
-    // التحقق من الأذونات
+    //check if location permissions are granted
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -36,11 +36,11 @@ class ResturantServices {
       throw Exception('Location permissions are permanently denied.');
     }
 
-    // رجّع موقع المستخدم
+    //get user location and return it as a Position object with high accuracy
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
-  /// دالة لحساب المسافة بين المستخدم والمطعم بالكيلومتر
+  /// function to calculate distance between user and resturant
   static Future<double> getDistance(double restaurantLat, double restaurantLon) async {
     final userPosition = await getCurrentLocation();
 
@@ -51,7 +51,7 @@ class ResturantServices {
       restaurantLon,
     );
 
-    // نحولها من متر إلى كيلومتر
+    // convert meters to kilometers
     double distanceInKm = distanceInMeters / 1000;
     return double.parse(distanceInKm.toStringAsFixed(2));
   }
@@ -90,7 +90,7 @@ static Stream<String> getRestaurantWorkingHours(String restaurantId) {
 }
 
 
-//get resturant location
+//get resturant location whic already store in database by admin
 static Future<Map<String, dynamic>?> getRestaurantLocation() async {
   final doc = await _db
       .collection(restaurantsCollection)
