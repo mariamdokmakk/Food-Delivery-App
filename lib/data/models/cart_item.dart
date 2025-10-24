@@ -1,4 +1,4 @@
-//no need for this model
+
 class CartItem {
   String id;
   String name;
