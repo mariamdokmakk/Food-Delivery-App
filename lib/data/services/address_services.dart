@@ -13,12 +13,13 @@ class AddressService {
   /// Save a new address for the current user
   Future<void> addAddress(AddressModel address) async {
     final userId = UserServices.getCurrentUser();
-
-    await _db
+    final docRef = await _db
         .collection(_userCollection)
         .doc(userId)
         .collection(_addressCollection)
         .add(address.toMap());
+
+    address.id = docRef.id;
   }
 
   /// Update an existing address by ID
@@ -59,7 +60,7 @@ class AddressService {
 
     if (!address.exists) return null;
 
-    return AddressModel.fromMap({...address.data()!, 'id': address.id});
+    return AddressModel.fromMap(address.data()!);
   }
 
   /// Stream all addresses of the current user
@@ -73,7 +74,7 @@ class AddressService {
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
-              .map((doc) => AddressModel.fromMap({...doc.data(), 'id': doc.id}))
+              .map((doc) => AddressModel.fromMap(doc.data()))
               .toList(),
         );
   }
