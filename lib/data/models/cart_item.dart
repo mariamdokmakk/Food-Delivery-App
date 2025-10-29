@@ -1,4 +1,3 @@
-
 class CartItem {
   String id;
   String name;
