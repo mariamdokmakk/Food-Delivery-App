@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 
 
 class SearchScreen extends StatefulWidget {
@@ -52,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: primaryGreen),
+                            borderSide:  BorderSide(color: Theme.of(context).colorScheme.primary),
                           ),
                         ),
                       ),
@@ -125,8 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildChip(String label) {
     return Chip(
-      label: Text(label, style: const TextStyle(color: primaryGreen)),
-      shape: const StadiumBorder(side: BorderSide(color: primaryGreen)),
+      label: Text(label, style:  TextStyle(color:  Theme.of(context).colorScheme.primary)),
+      shape:  StadiumBorder(side: BorderSide(color:  Theme.of(context).colorScheme.primary)),
       backgroundColor: Colors.transparent,
       labelPadding: const EdgeInsets.symmetric(horizontal: 16.0),
     );

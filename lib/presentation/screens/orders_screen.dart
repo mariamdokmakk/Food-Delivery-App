@@ -28,13 +28,15 @@ class OrdersMainScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3, // Active - Completed - Cancelled
       child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: const Text("Orders"),
           centerTitle: false,
           elevation: 5,
           bottom:
           TabBar(
-            labelColor: Colors.green,
+            labelColor: Theme.of(context).colorScheme.primary,
             unselectedLabelColor: Colors.grey[500],
             labelStyle: TextStyle(
               fontSize: 18,
@@ -46,7 +48,7 @@ class OrdersMainScreen extends StatelessWidget {
               fontSize: 16,        // Unselected tab text size
             ),
 
-            indicatorColor: Colors.green,
+            indicatorColor: Theme.of(context).colorScheme.primary,
             tabs:  [
               Tab(text: "Active"),
               Tab(text: "Completed"),

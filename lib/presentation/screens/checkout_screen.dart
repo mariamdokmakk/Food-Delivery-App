@@ -59,13 +59,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             cartItems.isNotEmpty && _selectedAddress != null;
         return Scaffold(
           appBar: AppBar(
-            title: const Text(
+            title: Text(
               'Checkout Orders',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             elevation: 0,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            foregroundColor: Theme.of(context).textTheme.bodyMedium!.color,
           ),
 
           // Bottom Order Button
@@ -87,7 +87,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     final orderData = {
                       'id': Id,
                       'userId': userId,
-                      'orderId': '',
+                      'orderId':DateTime.now().millisecondsSinceEpoch ,
                       'address': orderAddress,
                       'totalPrice': total,
                       'orderState': 'pending',
@@ -133,15 +133,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 }:null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                  isPlaceOrderEnabled ? Colors.green : Colors.grey,
+                  isPlaceOrderEnabled ? Theme.of(context).colorScheme.primary : Theme.of(context).disabledColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
                 ),
                 child: Text(
                   'Place Order - \$${total.toStringAsFixed(2)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -166,8 +166,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         color: Colors.grey.withOpacity(0.1)),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundColor: Colors.green.withOpacity(0.1),
-                        child: const Icon(Icons.location_on, color: Colors.green),
+                        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        child: Icon(Icons.location_on, color:  Theme.of(context).colorScheme.primary ),
                       ),
                       title: Text(_selectedAddress?['label'] ?? 'Select Address',
                           style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -225,7 +225,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
+                              color: Theme.of(context).scaffoldBackgroundColor,
                               border: Border.all(color: Colors.grey.withOpacity(0.2))),
                           child: Row(
                             children: [
@@ -247,12 +247,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(item.name,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15)),
                                     Text("\$${item.price}",
-                                        style: const TextStyle(
-                                            color: Colors.green,
+                                        style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.bold)),
                                   ],
                                 ),
@@ -266,17 +266,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         horizontal: 10, vertical: 4),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      color: Colors.green.withOpacity(0.15),
+                                      color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
                                     ),
                                     child: Text("${item.quantity}x",
-                                        style: const TextStyle(
-                                            color: Colors.green,
+                                        style:TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.bold)),
                                   ),
                                   IconButton(
                                     onPressed: () {},
-                                    icon: const Icon(Icons.edit,
-                                        color: Colors.green),
+                                    icon:  Icon(Icons.edit,
+                                        color: Theme.of(context).colorScheme.primary),
                                   )
                                 ],
                               )
@@ -290,8 +290,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                   // Payment + Discount
                   ListTile(
-                    leading: const Icon(Icons.account_balance_wallet,
-                        color: Colors.green),
+                    leading: Icon(Icons.account_balance_wallet,
+                        color: Theme.of(context).colorScheme.primary),
                     title: const Text("Payment Methods"),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => Navigator.push(
@@ -303,7 +303,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                    Divider(color: Colors.grey[500],),
                   ListTile(
                     leading:
-                    const Icon(Icons.local_offer, color: Colors.green),
+                    Icon(Icons.local_offer, color: Theme.of(context).colorScheme.primary),
                     title: const Text("Get Discounts"),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => Navigator.push(

@@ -130,7 +130,7 @@ class _itemDetailsScreenState extends State<itemDetailsScreen> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.white,
-                            child: const BackButton(color: Colors.black),
+                            child: BackButton(color: Colors.black),
                           ),
                           CircleAvatar(
                             backgroundColor: Colors.white,

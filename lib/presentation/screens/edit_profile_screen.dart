@@ -126,15 +126,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundImage: const AssetImage('assets/images/avatar.png'),
-                    backgroundColor: Colors.grey[200],
+                    backgroundImage:  AssetImage('assets/images/avatar.png'),
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   Positioned(
                     bottom: 0, right: 0,
                     child: CircleAvatar(
                       radius: 18,
                       backgroundColor: Theme.of(context).primaryColor,
-                      child: const Icon(Icons.edit, size: 18, color: Colors.white),
+                      child:  Icon(Icons.edit, size: 18, color: Theme.of(context).scaffoldBackgroundColor),
                     ),
                   ),
                 ],

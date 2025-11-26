@@ -110,9 +110,9 @@ class FavoriteRestaurantsScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.favorite_border, size: 80, color: Colors.grey),
-                  const SizedBox(height: 16),
-                  const Text("No favorites yet!", style: TextStyle(color: Colors.grey)),
+                  Icon(Icons.favorite_border, size: 80, color: Colors.red),
+                   SizedBox(height: 16),
+                  Text("No favorites yet!", style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color)),
                 ],
               ),
             );

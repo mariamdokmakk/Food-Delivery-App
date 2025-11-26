@@ -288,7 +288,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:image_picker/image_picker.dart';
 import '/presentation/widgets/show_snak_bar.dart';
 import '/presentation/screens/login_page.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -326,7 +326,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body:SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
@@ -339,11 +339,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Image.asset("assets/images/logo.jpg", height: 80),
                 ),
                 Center(
-                  child: const Text(
+                  child:  Text(
                     'Create New Account',
                     style: TextStyle(
                       fontSize: 27,
-                      color: Colors.black,
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -369,7 +369,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           onTap: _pickImage,
                           child: CircleAvatar(
                             radius: 16,
-                            backgroundColor: primaryGreen,
+                            backgroundColor:  Theme.of(context).colorScheme.primary,
                             child: const Icon(Icons.edit, size: 16, color: Colors.white),
                           ),
                         ),
@@ -384,7 +384,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // 3. Full Name
                 TextFormField(
-                  cursorColor: primaryGreen,
+                  cursorColor:  Theme.of(context).colorScheme.primary,
                   controller: namevalue,
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'name is required';
@@ -402,7 +402,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: primaryGreen),
+                      borderSide: BorderSide(color:  Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
@@ -410,7 +410,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // 4. Email
                 TextFormField(
-                  cursorColor: primaryGreen,
+                  cursorColor: Theme.of(context).colorScheme.primary,
                   controller: userValue,
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'Email is required';
@@ -429,13 +429,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: primaryGreen),
+                      borderSide: BorderSide(color:  Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
                 IntlPhoneField(
-                  cursorColor: primaryGreen,
+                  cursorColor:  Theme.of(context).colorScheme.primary,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     hintText: 'Phone Number',
@@ -447,7 +447,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: primaryGreen),
+                      borderSide: BorderSide(color:  Theme.of(context).colorScheme.primary),
                     ),
                   ),
                   initialCountryCode: 'EG',
@@ -462,7 +462,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 5),
                 // 5. Password
                 TextFormField(
-                  cursorColor: primaryGreen,
+                  cursorColor:  Theme.of(context).colorScheme.primary,
                   controller: passvalue,
                   obscureText: obscureText,
                   validator: (value) {
@@ -491,7 +491,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: primaryGreen),
+                      borderSide:  BorderSide(color:  Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
@@ -535,7 +535,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryGreen,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     minimumSize: const Size(150, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),

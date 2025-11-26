@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '/presentation/screens/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
-import '../widgets/constants.dart'; 
+import 'deleted/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -57,8 +57,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               SmoothPageIndicator(
                 controller: _controller,
                 count: 3,
-                effect: const ExpandingDotsEffect(
-                  activeDotColor: primaryGreen,
+                effect:  ExpandingDotsEffect(
+                  activeDotColor: Theme.of(context).colorScheme.primary,
                   dotHeight: 8,
                   dotWidth: 8,
                 ),
@@ -76,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryGreen,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -110,7 +110,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             curve: Curves.easeInOut,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryGreen,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),

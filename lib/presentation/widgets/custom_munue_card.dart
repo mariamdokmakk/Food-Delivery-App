@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/data/models/menu_item.dart';
 import '/data/services/favourite_services.dart';
-import '/presentation/widgets/constants.dart';
+import '../screens/deleted/constants.dart';
 
 
 class CustomMunueCard extends StatefulWidget {
@@ -105,7 +105,7 @@ class _CustomMunueCardState extends State<CustomMunueCard> {
     final itemDesc = widget.foodDetails;
     final itemPrice = widget.foodPrice;
     final imagePath = widget.foodImage;
-    final item = widget.menuItem;
+    // final item = widget.menuItem;
 
     Widget imageWidget;
     if (_isNetworkImage(imagePath)) {
@@ -134,7 +134,7 @@ class _CustomMunueCardState extends State<CustomMunueCard> {
     }
 
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
@@ -166,10 +166,10 @@ class _CustomMunueCardState extends State<CustomMunueCard> {
                     children: [
                       Row(
                         children: [
-                          const Icon(
+                           Icon(
                             Icons.delivery_dining,
                             size: 18,
-                            color: primaryGreen,
+                            color:Theme.of(context).colorScheme.primary,
                           ),
                           const SizedBox(width: 4),
                           Text(

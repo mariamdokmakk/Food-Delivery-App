@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '/presentation/screens/home_screen.dart';
 import '/presentation/screens/orders_screen.dart';
 import '/presentation/screens/profile_screen.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({super.key});
@@ -30,7 +30,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
         type: BottomNavigationBarType.fixed,
 
 
-        selectedItemColor: primaryGreen,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
 
         onTap: (index) {
           setState(() {

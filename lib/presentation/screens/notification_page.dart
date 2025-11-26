@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/constants.dart'; 
+import 'deleted/constants.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -18,7 +18,7 @@ class NotificationPage extends StatelessWidget {
       },
       {
         'icon': Icons.shopping_bag_outlined,
-        'iconColor': primaryGreen,
+        'iconColor': Theme.of(context).colorScheme.primary,
         'title': 'Orders Successful!',
         'date': '19 Dec, 2022 | 20:49 PM',
         'desc':
@@ -45,7 +45,7 @@ class NotificationPage extends StatelessWidget {
       },
       {
         'icon': Icons.person,
-        'iconColor': primaryGreen,
+        'iconColor': Theme.of(context).colorScheme.primary,
         'title': 'Account Setup Successful!',
         'date': '12 Dec, 2022 | 14:27 PM',
         'desc':
@@ -129,7 +129,7 @@ class NotificationPage extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: primaryGreen,
+                                    color: Theme.of(context).colorScheme.primary,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: const Text(

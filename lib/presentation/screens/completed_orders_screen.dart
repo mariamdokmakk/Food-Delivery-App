@@ -15,9 +15,9 @@ class CompletedOrdersScreen extends StatelessWidget {
       stream: OrderServices.getCompletedOrders(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
+          return Center(
             child: CircularProgressIndicator(
-              color: Color(0xFF4CAF50),
+              color:Theme.of(context).colorScheme.primary,
             ),
           );
         }
@@ -50,18 +50,18 @@ class CompletedOrdersScreen extends StatelessWidget {
               onLeaveReview: () {
                 // Navigate to review screen
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text('Review feature coming soon!'),
-                    backgroundColor: Color(0xFF4CAF50),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                 );
               },
               onOrderAgain: () {
                 // Navigate to restaurant menu
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                   SnackBar(
                     content: Text('Order again feature coming soon!'),
-                    backgroundColor: Color(0xFF4CAF50),
+                    backgroundColor:Theme.of(context).colorScheme.primary,
                   ),
                 );
               },

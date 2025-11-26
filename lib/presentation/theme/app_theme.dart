@@ -6,11 +6,14 @@ class AppTheme {
   // Prevent instantiation
   AppTheme._();
 
+  // ----------------- COLORS: YOUR NEW DESIGN ----------------- //
+  static const Color darkBackgroundV2 = Color(0xFF0F141E);     // Page background
+  static const Color darkCard = Color(0xFF1A1F2A);
   // ----------------- COLORS ----------------- //
-  static const Color _primaryGreen = Color(0xFF4CAF50);
+  static const Color _primaryGreen = Color(0xFF4CAF50);  //primary
   static const Color _lightGreen = Color(0xFF91CDA2);
-  static const Color _darkBackground = Color(0xFF1B1B1B);
-  static const Color _darkFieldBackground = Color(0xFF2C2C2C);
+  // static const Color _darkBackground = Color(0xFF1B1B1B);  //background
+  static const Color _darkFieldBackground = Color(0xFF2C2C2C);  //gray
 
   // ----------------- LIGHT THEME ----------------- //
   static final ThemeData lightTheme = ThemeData(
@@ -21,7 +24,9 @@ class AppTheme {
       primary: _primaryGreen,
       onPrimary: Colors.white,
       surface: Colors.white,
+      onSurface: Colors.black,
     ),
+    cardColor: Colors.white,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -80,12 +85,14 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: _primaryGreen,
-    scaffoldBackgroundColor: _darkBackground,
+    scaffoldBackgroundColor: darkBackgroundV2,
     colorScheme: const ColorScheme.dark().copyWith(
       primary: _primaryGreen,
       onPrimary: Colors.white,
-      surface: _darkBackground,
+      surface: darkBackgroundV2,
+
     ),
+    cardColor: Color(0xFF1A1F2A),
     appBarTheme: const AppBarTheme(
       backgroundColor: _primaryGreen,
       elevation: 0,

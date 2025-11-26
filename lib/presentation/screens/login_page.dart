@@ -4,7 +4,7 @@ import 'package:food_delivery_app/presentation/screens/deleted/fill_profile_scre
 import '/presentation/widgets/show_snak_bar.dart';
 import '/presentation/screens/main_home_screen.dart';
 import '/presentation/screens/register_page.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 24),
                 TextFormField(
-                  cursorColor: primaryGreen,
+                  cursorColor: Theme.of(context).colorScheme.primary,
                   controller: userValue,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -67,13 +67,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: primaryGreen),
+                      borderSide:  BorderSide(color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  cursorColor: primaryGreen,
+                  cursorColor: Theme.of(context).colorScheme.primary,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'password is required';
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     fillColor: Colors.grey.shade200,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: primaryGreen),
+                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryGreen,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     minimumSize: const Size(150, 50),
                   ),
                   child: const Text(
@@ -178,9 +178,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           "Sign up",
-                          style: TextStyle(color: primaryGreen),
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
                       ),
                     ],

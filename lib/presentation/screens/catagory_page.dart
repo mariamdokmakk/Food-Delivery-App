@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '/data/models/menu_item.dart';
 import '/data/services/home_services.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 import '/presentation/widgets/custom_munue_card.dart';
 
 
@@ -14,25 +14,25 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.bodyMedium!.color),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        iconTheme: IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
         title: Text(
           categoryName,
-          style: const TextStyle(color: Colors.black),
+          style:  TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
         ),
       ),
       body: StreamBuilder<List<MenuItem>>(
         stream: HomeServices.getMenuItemsByCategory(categoryName),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: primaryGreen),
+            return  Center(
+              child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
             );
           }
 
@@ -46,7 +46,7 @@ class CategoryPage extends StatelessWidget {
             return Center(
               child: Text(
                 'No $categoryName items available.',
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+                style: TextStyle(fontSize: 16, color: Theme.of(context).disabledColor),
               ),
             );
           }

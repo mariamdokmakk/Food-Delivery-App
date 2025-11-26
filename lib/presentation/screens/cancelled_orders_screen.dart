@@ -14,9 +14,9 @@ class CancelledOrdersScreen extends StatelessWidget {
       stream: OrderServices.getCancelledOrders(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
+          return Center(
             child: CircularProgressIndicator(
-              color: Color(0xFF4CAF50),
+              color: Theme.of(context).colorScheme.primary,
             ),
           );
         }

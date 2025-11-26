@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '/presentation/screens/home_screen.dart';
 import '/presentation/screens/onboarding_screen.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -95,10 +95,10 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ],
               ),
-              const SizedBox(height: 60),
-              const CircularProgressIndicator(
+               SizedBox(height: 60),
+               CircularProgressIndicator(
                 //padding: EdgeInsets.only(top: 500),
-                valueColor: AlwaysStoppedAnimation<Color>(primaryGreen),
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primary),
               ),
             ],
           ),

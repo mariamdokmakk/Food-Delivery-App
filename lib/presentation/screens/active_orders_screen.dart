@@ -5,18 +5,20 @@ import '/presentation/widgets/empty_state_widget.dart';
 import '/presentation/widgets/order_card.dart';
 import '../../../data/services/order_services.dart';
 
+
 class ActiveOrdersScreen extends StatelessWidget {
   const ActiveOrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+
     return StreamBuilder<List<OrderItem>>(
       stream: OrderServices.getActiveOrders(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(
-
               color: Theme.of(context).primaryColor,
             ),
           );

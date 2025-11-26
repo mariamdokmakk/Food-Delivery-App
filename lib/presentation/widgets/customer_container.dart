@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/presentation/widgets/constants.dart';
+import '../screens/deleted/constants.dart';
 
 class CustomerContainer extends StatelessWidget {
   final String categoryImage;
@@ -22,8 +22,8 @@ class CustomerContainer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          color: isSelected ? primaryGreen : Colors.white,
-          border: Border.all(color: primaryGreen),
+          color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).scaffoldBackgroundColor,
+          border: Border.all(color: Theme.of(context).colorScheme.primary),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -33,7 +33,7 @@ class CustomerContainer extends StatelessWidget {
             Text(
               categoryName,
               style: TextStyle(
-                color: isSelected ? Colors.white : primaryGreen,
+                color: isSelected ? Theme.of(context).textTheme.bodyMedium!.color : Theme.of(context).colorScheme.primary,
               ),
             ),
           ],

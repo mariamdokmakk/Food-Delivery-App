@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/data/models/cart_item.dart';
 import '/data/services/cart_services.dart';
-import '/presentation/widgets/constants.dart';
+
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -9,25 +9,25 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.bodyMedium!.color),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'My Cart',
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyMedium!.color,
             fontWeight: FontWeight.bold,
             fontSize: 22,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.black),
+            icon: Icon(Icons.delete, color: Theme.of(context).textTheme.bodyMedium!.color),
             onPressed: () async {
               await CartServices.clearCart();
             },
@@ -38,8 +38,8 @@ class CartScreen extends StatelessWidget {
         stream: CartServices.getAllCartItems(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: primaryGreen),
+            return  Center(
+              child: CircularProgressIndicator(color:Theme.of(context).colorScheme.primary),
             );
           }
 
@@ -50,16 +50,17 @@ class CartScreen extends StatelessWidget {
           final cartItems = snapshot.data ?? [];
 
           if (cartItems.isEmpty) {
-            return const Center(
+            return Center(
+
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.shopping_cart, size: 100, color: primaryGreen),
+                  Icon(Icons.shopping_cart, size: 100, color: Theme.of(context).colorScheme.primary),
                   SizedBox(height: 16),
                   Text(
                     'Empty',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -67,7 +68,7 @@ class CartScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   Text(
                     "You don't have any foods in your cart right now",
-                    style: TextStyle(color: Colors.black54, fontSize: 14),
+                    style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color, fontSize: 14),
                   ),
                 ],
               ),
@@ -93,9 +94,9 @@ class CartScreen extends StatelessWidget {
                           color: Colors.redAccent,
                           borderRadius: BorderRadius.circular(25),
                         ),
-                        child: const Icon(
+                        child:  Icon(
                           Icons.delete,
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                           size: 32,
                         ),
                       ),
@@ -103,9 +104,10 @@ class CartScreen extends StatelessWidget {
                         await CartServices.deleteCartItem(item.id);
                       },
                       child: Container(
+
                         margin: const EdgeInsets.only(bottom: 20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(25),
                           boxShadow: [
                             BoxShadow(
@@ -137,7 +139,7 @@ class CartScreen extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              const SizedBox(width: 16),
+                              SizedBox(width: 16),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,10 +147,10 @@ class CartScreen extends StatelessWidget {
                                     Text(
                                       item.name,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
-                                        color: Colors.black,
+                                        color: Theme.of(context).textTheme.bodyMedium!.color,
                                       ),
                                     ),
                                     const SizedBox(height: 6),
@@ -162,8 +164,8 @@ class CartScreen extends StatelessWidget {
                                     const SizedBox(height: 10),
                                     Text(
                                       '\$${item.price.toStringAsFixed(2)}',
-                                      style: const TextStyle(
-                                        color: primaryGreen,
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.primary,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -191,7 +193,7 @@ class CartScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryGreen,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '/presentation/screens/set_location.dart';
 import '/logic/cubit/user_cubit.dart';
 import '/logic/cubit/user_state.dart';
-import 'deleted/add_address_screen.dart';
+
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -66,8 +66,8 @@ class _AddressScreenState extends State<AddressScreen> {
                   context,
                   title: address.label,
                   address: address.description,
-                  // You can add logic to check if it's default later
-                  isDefault: index == 0,
+
+                  // isDefault: index == 0,
                 );
               },
             );
@@ -82,11 +82,15 @@ class _AddressScreenState extends State<AddressScreen> {
 
   Widget _buildAddressCard(BuildContext context,
       {required String title, required String address, bool isDefault = false}) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: isDark
+            ? []
+            : [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             blurRadius: 10,
@@ -110,8 +114,8 @@ class _AddressScreenState extends State<AddressScreen> {
               title,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            if (isDefault) const SizedBox(width: 8),
-            if (isDefault)
+            // if (isDefault) const SizedBox(width: 8),
+            // if (isDefault)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
@@ -133,7 +137,9 @@ class _AddressScreenState extends State<AddressScreen> {
           padding: const EdgeInsets.only(top: 4.0),
           child: Text(
             address,
-            style: const TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+            ),
           ),
         ),
         trailing: IconButton(

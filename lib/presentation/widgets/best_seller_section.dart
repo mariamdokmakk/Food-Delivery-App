@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/data/models/menu_item.dart';
 import '/data/services/home_services.dart';
-import '/presentation/widgets/constants.dart';
+import '../screens/deleted/constants.dart';
 import '/presentation/widgets/custom_munue_card.dart';
 import '/presentation/widgets/customer_container.dart';
 
@@ -53,8 +53,8 @@ class _BestSellersSectionState extends State<BestSellersSection> {
           stream: stream,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(color: primaryGreen),
+              return  Center(
+                child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
               );
             }
 
@@ -100,6 +100,7 @@ class _BestSellersSectionState extends State<BestSellersSection> {
   // Helper to build category buttons
   Widget _buildCategoryItem(String image, String name) {
     return CustomerContainer(
+
       categoryImage: image,
       categoryName: name,
       isSelected: selectedCategory == name,

@@ -412,7 +412,6 @@ import '../../presentation/screens/recommended_page.dart';
 import '../../presentation/screens/search_screen.dart';
 import '../../presentation/screens/special_offers_screen.dart';
 import '../../presentation/widgets/best_seller_section.dart';
-import '../../presentation/widgets/constants.dart';
 import '../../presentation/widgets/custom_offer_card.dart';
 import '../widgets/custom_category.dart';
 import '../widgets/custom_food_card.dart';
@@ -441,8 +440,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BlocBuilder<UserCubit, UserState>(
             builder: (context, state) {
               if (state is UserLoading) {
-                return const CircleAvatar(
-                  backgroundColor: primaryGreen,
+                return  CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 );
               }
@@ -467,10 +466,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-        title: const Text(
-          'Deliver to',
+        title:  Text(
+          'To The Bone',
           style: TextStyle(
-              // color: Colors.grey,
+               color: Theme.of(context).textTheme.bodyMedium!.color,
               fontSize: 24),
         ),
         actions: [
@@ -551,7 +550,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: InputDecoration(
                 prefixIcon: IconButton(
                   icon: Icon(Icons.search),
-                  // color: Colors.grey,
+                  color: Theme.of(context).iconTheme.color,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -570,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.r), 
-                  borderSide: const BorderSide(color: primaryGreen),
+                  borderSide:  BorderSide(color:Theme.of(context).colorScheme.primary),
                 ),
               ),
             ),
@@ -594,7 +593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: Text('See All', style: TextStyle(color: primaryGreen)),
+                  child: Text('See All', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
                 ),
               ],
             ),
@@ -608,7 +607,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               child: CustomOfferCard(
-                bgColor: primaryGreen,
+                bgColor: Theme.of(context).colorScheme.primary,
                 offerImage: 'assets/images/special_offer.png',
                 offerpercent: '30%',
               ),
@@ -696,16 +695,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: Text('See All', style: TextStyle(color: primaryGreen),),
+                  child: Text('See All', style: TextStyle(color:Theme.of(context).colorScheme.primary),),
                 ),
               ],
+
             ),
             StreamBuilder<List<MenuItem>>(
               stream: HomeServices.getBestSellers(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: primaryGreen),
+                  return  Center(
+                    child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
                   );
                 }
 
@@ -716,7 +716,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final menuItems = snapshot.data ?? [];
 
                 if (menuItems.isEmpty) {
-                  return const Center(child: Text('No menu items found'));
+                  return Center(child: Text('No menu items found'));
                 }
 
                 return SizedBox(
@@ -730,8 +730,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.only(
                           left: 8.w,
                         ),
-                        child: InkWell(
-                          onTap: (){       Navigator.of(context).push(
+                        child:
+                        InkWell(
+                          onTap: (){    Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
                                 return itemDetailsScreen(menuItem: item,);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/data/models/menu_item.dart';
 import '/data/services/favourite_services.dart';
-import '/presentation/widgets/constants.dart';
+import '../screens/deleted/constants.dart';
 
 class CustomFoodCard extends StatefulWidget {
   final MenuItem item;
@@ -39,7 +39,7 @@ class _CustomFoodCardState extends State<CustomFoodCard> {
     final item = widget.item;
 
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r)),
       elevation: 2,
       child: Container(
@@ -92,7 +92,7 @@ class _CustomFoodCardState extends State<CustomFoodCard> {
                 Text(
                   '\$${item.price.toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: primaryGreen,
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
                   ),

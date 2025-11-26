@@ -56,7 +56,7 @@
 import 'package:flutter/material.dart';
 import '/data/models/offers_item.dart';
 import '/data/services/home_services.dart';
-import '/presentation/widgets/constants.dart';
+import 'deleted/constants.dart';
 import '/presentation/widgets/custom_offer_card.dart';
 
 
@@ -67,10 +67,10 @@ class SpecialOffersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon:  Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.bodyMedium!.color),
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.white,
@@ -80,7 +80,7 @@ class SpecialOffersScreen extends StatelessWidget {
         stream: HomeServices.getOffers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(color: primaryGreen,));
+            return  Center(child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,));
           }
 
           if (snapshot.hasError) {
@@ -106,7 +106,7 @@ class SpecialOffersScreen extends StatelessWidget {
               return CustomOfferCard(
                 offerImage: item.imageUrl,
                 offerpercent: '${offer.discount_percent}%',
-                bgColor: primaryGreen,
+                bgColor: Theme.of(context).colorScheme.primary,
               );
             },
           );
