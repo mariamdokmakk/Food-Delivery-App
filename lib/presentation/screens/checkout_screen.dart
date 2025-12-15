@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:food_delivery_app/presentation/screens/home_screen.dart';
 
 import '/data/models/cart_item.dart';
 
@@ -10,7 +11,8 @@ import '/presentation/screens/order_successful_screen.dart';
 import '/presentation/screens/payment_methods_screen.dart';
 
 import '/presentation/screens/select_address_screen.dart';
-import '/presentation/screens/offers_screen.dart';
+
+import 'cart_page.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key });
@@ -42,15 +44,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
         double subtotal = 0;
         for (var item in cartItems) {
-          subtotal += (item.price * item.quantity);
+          subtotal += (item.finalPrice * item.quantity);
         }
         const double deliveryFee = 2.00;
         final double total = subtotal > 0 ? subtotal + deliveryFee : 0.0;
-
-        // If no address selected, display "Add Address"
-        // String addressLabel =
-        // _selectedAddress != null ? _selectedAddress!['label'] ?? 'Address' : 'Select Address ';
-
 
         String orderAddress =
         _selectedAddress != null ? _selectedAddress!['description'] ?? 'Unknown location' : '';
@@ -95,9 +92,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       'items': cartItems.map((item) => {
                         'id': item.id,
                         'name': item.name,
-                        'price': item.price,
+                        'price': item.finalPrice,
                         'quantity': item.quantity,
                         'image_url': item.imageUrl,
+                        'category':item.category
                       }).toList(),
                     };
 
@@ -232,10 +230,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               // Image
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
-                                child: Image.asset(
-                                  'assets/images/burger_image.jpeg',
-                                  width: 65,
-                                  height: 65,
+                                child: Image.network(
+                                  width: 100,
+                                  height: 100,
+                                  item.imageUrl,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -274,7 +272,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             fontWeight: FontWeight.bold)),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => CartScreen() )
+                                      );
+                                    },
                                     icon:  Icon(Icons.edit,
                                         color: Theme.of(context).colorScheme.primary),
                                   )
@@ -304,13 +308,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ListTile(
                     leading:
                     Icon(Icons.local_offer, color: Theme.of(context).colorScheme.primary),
-                    title: const Text("Get Discounts"),
+                    title: const Text("Add Promo Code"),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                            const OffersScreen())),
+                            builder: (context) => CartScreen())),
                   ),
 
                   const SizedBox(height: 24),

@@ -1,76 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// 1. Import Data & Services
 import '/data/models/menu_item.dart';
 import '/data/services/favourite_services.dart';
-import '/presentation/widgets/menu_item_tile.dart'; // We reuse the food tile!
-
-
-
-// class FavoriteRestaurantsScreen extends StatelessWidget {
-//   const FavoriteRestaurantsScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('My Favorites'), // Changed title to match data
-//         actions: [
-//           IconButton(
-//             onPressed: () {
-//               // TODO: Search logic
-//             },
-//             icon: const Icon(Icons.search),
-//           ),
-//         ],
-//       ),
-//       // 2. Listen to the Favorites Stream
-//       body: StreamBuilder<List<MenuItem>>(
-//         stream: FavoritesService.getFavoritesStream(),
-//         builder: (context, snapshot) {
-//           // --- Loading State ---
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(child: CircularProgressIndicator());
-//           }
-//
-//           // --- Error State ---
-//           if (snapshot.hasError) {
-//             return const Center(child: Text("Error loading favorites"));
-//           }
-//
-//           // --- Empty State ---
-//           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-//             return Center(
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Icon(Icons.favorite_border, size: 80, color: Colors.grey[300]),
-//                   const SizedBox(height: 16),
-//                   const Text("No favorites yet!", style: TextStyle(color: Colors.grey)),
-//                 ],
-//               ),
-//             );
-//           }
-//
-//           // --- Success State ---
-//           final favorites = snapshot.data!;
-//
-//           return ListView.separated(
-//             padding: const EdgeInsets.all(16),
-//             itemCount: favorites.length,
-//             separatorBuilder: (context, index) => const Divider(),
-//             itemBuilder: (context, index) {
-//               // 3. Use MenuItemTile to display the Food
-//               return MenuItemTile(menuItem: favorites[index]);
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+import '/presentation/widgets/menu_item_tile.dart';
 
 class FavoriteRestaurantsScreen extends StatelessWidget {
   const FavoriteRestaurantsScreen({super.key});
@@ -82,11 +14,12 @@ class FavoriteRestaurantsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Favorites'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title:  Text('My Favorites',style: TextStyle(color: Theme.of(context).iconTheme.color)),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.search),
+            icon:  Icon(Icons.search,color: Theme.of(context).iconTheme.color),
           ),
         ],
       ),

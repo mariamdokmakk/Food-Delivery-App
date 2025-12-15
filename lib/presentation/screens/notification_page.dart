@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'deleted/constants.dart';
-
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 
@@ -55,25 +53,31 @@ class NotificationPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Theme.of(context).textTheme.bodyMedium!.color,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Notification',
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyMedium!.color,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_horiz, color: Colors.black),
+            icon: Icon(
+              Icons.more_horiz,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
             onPressed: () {},
           ),
         ],
@@ -87,7 +91,7 @@ class NotificationPage extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 20),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(25),
               boxShadow: [
                 BoxShadow(
@@ -106,7 +110,11 @@ class NotificationPage extends StatelessWidget {
                     CircleAvatar(
                       radius: 25,
                       backgroundColor: item['iconColor'].withOpacity(0.1),
-                      child: Icon(item['icon'], color: item['iconColor'], size: 28),
+                      child: Icon(
+                        item['icon'],
+                        color: item['iconColor'],
+                        size: 28,
+                      ),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -127,15 +135,21 @@ class NotificationPage extends StatelessWidget {
                               if (item['isNew'])
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 4),
+                                    horizontal: 10,
+                                    vertical: 4,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'New',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium!.color,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -159,8 +173,8 @@ class NotificationPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   item['desc'],
-                  style: const TextStyle(
-                    color: Colors.black87,
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium!.color,
                     fontSize: 15,
                     height: 1.4,
                   ),

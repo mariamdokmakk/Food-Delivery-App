@@ -21,39 +21,19 @@ class CheckoutOrderServices {
         .map((cartItem) => CartItem.fromMap(cartItem.data()))
         .toList();
   }
-
-  //need to handle fee
-  // static Future<void> placeOrder(num fee) async {
-  //   final order = _db
-  //       .collection(userCollection)
-  //       .doc(UserServices.getCurrentUser())
-  //       .collection(ordersCollection)
-  //       .doc();
-  //
-  //   _db
-  //       .collection(userCollection)
-  //       .doc(UserServices.getCurrentUser())
-  //       .collection(ordersCollection)
-  //       .doc()
-  //       .set({
-  //         'id': order.id,
-  //         'items': CheckoutOrderServices.getAllCartItems(),
-  //         'totalPrice': CheckoutOrderServices.getTotalPrice(fee),
-  //         'orderState': "active",
-  //         'orderProgress': "preparing",
-  //         'createdAt': Timestamp.now(),
-  //       });
-  // }
-  //
   static Future<num> getTotalPrice(num fee) async {
     num totalPrice = 0;
 
-    final List<CartItem> cartList =
-        await CheckoutOrderServices.getAllCartItems();
-    cartList.map((cartItem) => totalPrice += cartItem.price);
+    final List<CartItem> cartList = await getAllCartItems();
+
+    for (final cartItem in cartList) {
+      totalPrice += cartItem.finalPrice * cartItem.quantity;
+    }
 
     return totalPrice + fee;
   }
+
+
   static Future<void> placeOrder(num fee) async {
     final userId = UserServices.getCurrentUser();
 
@@ -94,28 +74,10 @@ class CheckoutOrderServices {
       final place = placemarks.first;
       return "${place.street}, ${place.locality}, ${place.country}";
     } catch (e) {
-      print("Reverse geocoding error: $e");
       return "Failed to get address";
     }
   }
 
-  // static Future<String> getUserAddress() async {
-  //   try {
-  //     final uid = UserServices.getCurrentUser();
-  //     final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-  //     if (!doc.exists) return "Unknown location";
-  //
-  //     final data = doc.data()!;
-  //     final latitude = (data['latitude'] ?? 0).toDouble();
-  //     final longitude = (data['longitude'] ?? 0).toDouble();
-  //
-  //     // convert coordinates to address
-  //     final address = await CheckoutOrderServices.getAddressFromCoordinates(latitude, longitude);
-  //     return address;
-  //   } catch (e) {
-  //     print(e);
-  //     return "Failed to get address";
-  //   }
-  // }
+
 
 }

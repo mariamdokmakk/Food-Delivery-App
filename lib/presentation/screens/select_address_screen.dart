@@ -1,84 +1,8 @@
-// import 'package:flutter/material.dart';
-// import '/presentation/widgets/address_tile.dart';
-//
-// class SelectAddressScreen extends StatefulWidget {
-//   const SelectAddressScreen({super.key});
-//
-//   @override
-//   State<SelectAddressScreen> createState() => _SelectAddressScreenState();
-// }
-//
-// class _SelectAddressScreenState extends State<SelectAddressScreen> {
-//   int _selectedIndex = 0; // Tracks which address is selected
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Select Address'),
-//       ),
-//       // 2. "Add New Address" button
-//       bottomNavigationBar: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: ElevatedButton(
-//           onPressed: () {
-//             // TODO: Navigate to an "Add New Address" screen
-//           },
-//           child: const Text('Add New Address'),
-//         ),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           // This Column is NOT constant
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               // 1. List of addresses
-//               // This ListView is NOT constant
-//               ListView(
-//                 shrinkWrap: true,
-//                 physics: const NeverScrollableScrollPhysics(),
-//                 children: [
-//                   AddressTile(
-//                     title: 'Home',
-//                     address: 'Times Square NYC, Manhattan',
-//                     icon: Icons.home,
-//                     isDefault: true,
-//                     isSelected: _selectedIndex == 0,
-//                     onTap: () {
-//                       setState(() {
-//                         _selectedIndex = 0;
-//                       });
-//                     },
-//                   ),
-//                   const SizedBox(height: 12),
-//                   AddressTile(
-//                     title: 'Office',
-//                     address: '88 Commercial Plaza, NY',
-//                     icon: Icons.work,
-//                     isSelected: _selectedIndex == 1,
-//                     onTap: () {
-//                       setState(() {
-//                         _selectedIndex = 1;
-//                       });
-//                     },
-//                   ),
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '/presentation/widgets/address_tile.dart';
 import '/data/services/user_services.dart';
+import 'address_screen.dart';
 
 class SelectAddressScreen extends StatefulWidget {
   const SelectAddressScreen({super.key});
@@ -111,7 +35,10 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen())
+            );
+          },
           child: const Text('Add New Address'),
         ),
       ),

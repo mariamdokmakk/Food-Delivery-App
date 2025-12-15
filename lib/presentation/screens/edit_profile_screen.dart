@@ -10,7 +10,8 @@ import '/logic/cubit/user_cubit.dart';
 import '/logic/cubit/user_state.dart';
 import '/data/models/user.dart';
 import '/data/services/user_services.dart';
-
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
@@ -25,19 +26,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-
+  File? _imageFile;
+  String? _existingImageUrl;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
-    // 1. Pre-fill data from Cubit when screen opens
+
     final state = context.read<UserCubit>().state;
     if (state is UserLoaded) {
       _nameController.text = state.user.name;
       _emailController.text = state.user.email;
-      _phoneController.text = state.user.phone.toString();
-      // _selectedGender = state.user.gender.isNotEmpty ? state.user.gender : 'Male';
-      // Note: You might need to handle Date if your model has it
+      _phoneController.text = state.user.phone;
+      _existingImageUrl = state.user.profileImage; // 🔹 store existing image
     }
   }
 
@@ -52,7 +54,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: Text('Edit Profile',style: TextStyle(color: Theme.of(context).iconTheme.color))),
 
       // --- UPDATE BUTTON ---
       bottomNavigationBar: Padding(
@@ -61,55 +65,38 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {
-              print("🟢 Update Button Pressed");
-
-              // 1. Check Form Validation
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                print("🟢 Form is Valid. Preparing data...");
-
                 try {
-                  // 2. Get User ID safely
-                  final currentUserId = UserServices.getCurrentUser();
-                  print("🟢 User ID found: $currentUserId");
+                  String? finalImageUrl = _existingImageUrl;
 
-                  // 3. Create the User Object
+                  // 🔹 Upload new image if user selected one
+                  if (_imageFile != null) {
+                    finalImageUrl =
+                    await UserServices.uploadProfileImage(_imageFile!);
+                  }
+
                   final updatedUser = AppUser(
-                    id: currentUserId,
-                    name: _nameController.text,
-                    email: _emailController.text,
-
-                    profileImage: " ",
-                    phone: _phoneController.text,
-                    // gender: _selectedGender,
-                    // Keep existing location data if possible (dummy for now)
-                    longitude: 0.0,
-                    latitude: 0.0,
+                    id: UserServices.getCurrentUser(),
+                    name: _nameController.text.trim(),
+                    email: _emailController.text.trim(),
+                    phone: _phoneController.text.trim(),
+                    profileImage: finalImageUrl ?? "",
                   );
 
-                  print("🟢 Sending data to Cubit...");
+                  await context
+                      .read<UserCubit>()
+                      .updateUserProfile(updatedUser);
 
-                  // 4. Send to Firebase via Cubit
-                  context.read<UserCubit>().updateUserProfile(updatedUser);
-
-                  print("🟢 Closing screen...");
-
-                  // 5. Go Back
                   Navigator.pop(context);
-
                 } catch (e) {
-                  print("🔴 ERROR during update: $e");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Error: $e")),
                   );
                 }
-              } else {
-                print("🔴 Form is Invalid (A field is empty or wrong)");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Please fill in all required fields")),
-                );
               }
             },
+
             child: const Text('Update'),
           ),
         ),
@@ -126,20 +113,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundImage:  AssetImage('assets/images/avatar.png'),
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    backgroundImage: _imageFile != null
+                        ? FileImage(_imageFile!)
+                        : (_existingImageUrl != null && _existingImageUrl!.isNotEmpty)
+                        ? NetworkImage(_existingImageUrl!)
+                        : const AssetImage('assets/images/avatar.png') as ImageProvider,
+                      backgroundColor: Colors.grey.shade200,
                   ),
                   Positioned(
-                    bottom: 0, right: 0,
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child:  Icon(Icons.edit, size: 18, color: Theme.of(context).scaffoldBackgroundColor),
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: _pickImage,
+                      child: CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: const Icon(Icons.edit, size: 18, color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+
+             SizedBox(height: 24),
 
               // Full Name
               TextFormField(
@@ -178,32 +174,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
                 ),
               ),
-              const SizedBox(height: 16),
-
-              // Gender
-              // DropdownButtonFormField<String>(
-              //   decoration: InputDecoration(
-              //       labelText: 'Gender',
-              //       filled: true,
-              //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none)
-              //   ),
-              //   value: _selectedGender,
-              //   // items: genderOptions.map((String gender) {
-              //   //   return DropdownMenuItem<String>(
-              //   //     value: gender,
-              //   //     child: Text(gender),
-              //   //   );
-              //   // }).toList(),
-              //   onChanged: (val) {
-              //     if(val != null) {
-              //       setState(() => _selectedGender = val);
-              //     }
-              //   },
-              // ),
+              SizedBox(height: 16),
             ],
           ),
         ),
       ),
     );
+   }
+  Future<void> _pickImage() async {
+    final XFile? picked =
+    await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+
+    if (picked != null) {
+      setState(() {
+        _imageFile = File(picked.path);
+      });
+    }
   }
 }

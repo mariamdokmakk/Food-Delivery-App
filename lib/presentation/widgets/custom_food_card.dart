@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/data/models/menu_item.dart';
 import '/data/services/favourite_services.dart';
-import '../screens/deleted/constants.dart';
 
 class CustomFoodCard extends StatefulWidget {
   final MenuItem item;
@@ -14,25 +13,6 @@ class CustomFoodCard extends StatefulWidget {
 }
 
 class _CustomFoodCardState extends State<CustomFoodCard> {
-  // bool isFavorite = false;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _loadFavoriteStatus();
-  // }
-
-  // Future<void> _loadFavoriteStatus() async {
-  //   final fav = await FavoriteServices.isFavorite(widget.item.id);
-  //   if (mounted) {
-  //     setState(() => isFavorite = fav);
-  //   }
-  // }
-
-  // Future<void> _toggleFavorite() async {
-  //   setState(() => isFavorite = !isFavorite);
-  //   await FavoriteServices.toggleFavorite(widget.item);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,14 +69,45 @@ class _CustomFoodCardState extends State<CustomFoodCard> {
             ),
             Row(
               children: [
-                Text(
-                  '\$${item.price.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
+                //if offer is no longer active the item its new price will returned to zero
+                if (item.newPrice !=0)
+                  Row(
+                    children: [
+
+                      // old price
+                      Text(
+                        '\$${item.price.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 13.sp,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+
+                      SizedBox(width: 8.w),
+
+                      // new price
+                      Text(
+                        '\$${item.newPrice!.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                    ],
+                  )
+                else
+
+                  Text(
+                    '\$${item.price.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                    ),
                   ),
-                ),
+
                 Spacer(),
                 ValueListenableBuilder<List<String>>(
                   valueListenable: FavoriteServices.favoriteIds,
@@ -114,13 +125,7 @@ class _CustomFoodCardState extends State<CustomFoodCard> {
                     );
                   },
                 )
-                // IconButton(
-                //   icon: Icon(
-                //     isFavorite ? Icons.favorite : Icons.favorite_border,
-                //     color: isFavorite ? Colors.red : null,
-                //   ),
-                //   onPressed: _toggleFavorite,
-                // ),
+
               ],
             ),
           ],
@@ -129,4 +134,4 @@ class _CustomFoodCardState extends State<CustomFoodCard> {
     );
   }
 }
-//
+

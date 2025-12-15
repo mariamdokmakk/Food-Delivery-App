@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '/presentation/screens/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
-import 'deleted/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {

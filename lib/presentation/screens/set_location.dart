@@ -1,134 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:latlong2/latlong.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-//
-// class SetLocationScreen extends StatefulWidget {
-//   @override
-//   _SetLocationScreenState createState() => _SetLocationScreenState();
-// }
-//
-// class _SetLocationScreenState extends State<SetLocationScreen> {
-//   LatLng? selectedLocation;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _getCurrentLocation();
-//   }
-//
-//   Future<void> _getCurrentLocation() async {
-//     bool serviceEnabled;
-//     LocationPermission permission;
-//
-//     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-//     if (!serviceEnabled) {
-//       return Future.error('Location services are disabled.');
-//     }
-//
-//     permission = await Geolocator.checkPermission();
-//     if (permission == LocationPermission.denied) {
-//       permission = await Geolocator.requestPermission();
-//       if (permission == LocationPermission.denied) {
-//         return Future.error('Location permissions are denied');
-//       }
-//     }
-//
-//     if (permission == LocationPermission.deniedForever) {
-//       return Future.error(
-//           'Location permissions are permanently denied, we cannot request permissions.');
-//     }
-//
-//     Position position = await Geolocator.getCurrentPosition(
-//         desiredAccuracy: LocationAccuracy.high);
-//
-//     setState(() {
-//       selectedLocation = LatLng(position.latitude, position.longitude);
-//     });
-//   }
-//
-//   Future<void> _saveLocation() async {
-//     if (selectedLocation == null) return;
-//
-//     final user = FirebaseAuth.instance.currentUser;
-//     if (user != null) {
-//       await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-//         'location': {
-//           'latitude': selectedLocation!.latitude,
-//           'longitude': selectedLocation!.longitude,
-//         }
-//       });
-//       ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(content: Text('Location saved successfully!')));
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Set Your Location')),
-//       body: selectedLocation == null
-//           ? Center(child: CircularProgressIndicator())
-//           : Stack(
-//         children: [
-//           FlutterMap(
-//             options: MapOptions(
-//               center: selectedLocation,
-//               zoom: 15,
-//               onTap: (tapPosition, point) {
-//                 setState(() {
-//                   selectedLocation = point;
-//                 });
-//               },
-//             ),
-//             layers: [
-//               TileLayerOptions(
-//                 urlTemplate:
-//                 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//                 subdomains: ['a', 'b', 'c'],
-//               ),
-//               MarkerLayerOptions(
-//                 markers: [
-//                   Marker(
-//                     width: 80,
-//                     height: 80,
-//                     point: selectedLocation!,
-//                     builder: (ctx) => Icon(
-//                       Icons.location_on,
-//                       color: Colors.green,
-//                       size: 40
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//           Positioned(
-//             bottom: 20,
-//             left: 20,
-//             right: 20,
-//             child: ElevatedButton(
-//               onPressed: _saveLocation,
-//               style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.green, padding: EdgeInsets.all(15)),
-//               child: Text('Continue', style: TextStyle(fontSize: 18)),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
@@ -185,7 +58,7 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        // Use 'display_name' for full address
+        // full address
         String address = data['display_name'] ?? "";
 
         setState(() {

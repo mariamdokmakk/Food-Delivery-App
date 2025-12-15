@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-// Navigation Imports
-import '/presentation/screens/restaurant_details_screen.dart';
-import '/data/models/resturant.dart';
 import 'main_home_screen.dart';
 
 class OrderSuccessfulScreen extends StatelessWidget {

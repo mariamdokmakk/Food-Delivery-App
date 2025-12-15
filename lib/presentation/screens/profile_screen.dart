@@ -11,10 +11,9 @@ import '/presentation/screens/notification_screen.dart';
 import '/presentation/screens/language_screen.dart';
 import '/presentation/screens/payment_methods_screen.dart';
 import '/presentation/screens/favorite_restaurants_screen.dart';
-import '/presentation/screens/offers_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/presentation/theme/theme_manager.dart';
-import 'main_home_screen.dart'; // For Logout logic
+
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -53,18 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             title: const Text('Profile'),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => MainHomeScreen()),
-                      (route) => false,
-                );
-              },
-            ),
-
-            backgroundColor: Colors.transparent, // Makes it see-through
+            backgroundColor: Colors.transparent,
             elevation: 0,
             actions: [
               IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
@@ -76,31 +64,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   // --- FIX: SafeArea for Header ---
-                  SafeArea(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: CircleAvatar(
+              SafeArea(
+              child: ListTile(
+              contentPadding: EdgeInsets.zero,
+                  leading: BlocBuilder<UserCubit, UserState>(
+                    builder: (context, state) {
+                      if (state is UserLoaded) {
+                        final user = state.user;
+                        return CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.grey.shade300,
+                          backgroundImage: user.profileImage.isNotEmpty
+                              ? NetworkImage(user.profileImage)
+                              : null,
+                          child: user.profileImage.isEmpty
+                              ? const Icon(Icons.person, size: 36, color: Colors.white)
+                              : null,
+                        );
+                      }
+                      return const CircleAvatar(
                         radius: 30,
-                        backgroundColor: Colors.grey.shade200,
-                        child: const Icon(Icons.person, size: 40, color: Colors.grey),
-                      ),
-                      title: Text(
-                        userName,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      subtitle: Text(userPhone),
-                      trailing: IconButton(
-                        icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EditProfileScreen()),
-                          );
-                        },
-                      ),
-                    ),
+                        backgroundColor: Colors.grey,
+                        child: Icon(Icons.person, size: 36, color: Colors.white),
+                      );
+                    },
                   ),
-                  const SizedBox(height: 24),
+                  title: Text(userName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              subtitle: Text(userPhone),
+          trailing: IconButton(
+            icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+              );
+            },
+          ),
+        ),
+        ),
+
+        const SizedBox(height: 24),
 
                   // --- Menu Items ---
                   _buildMenuTile(
@@ -108,12 +111,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icons.favorite_outline,
                     title: 'My Favorite Foods',
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteRestaurantsScreen())),
-                  ),
-                  _buildMenuTile(
-                    context,
-                    icon: Icons.local_offer_outlined,
-                    title: 'Special Offers & Promo',
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OffersScreen())),
                   ),
                   _buildMenuTile(
                     context,
@@ -149,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguageScreen())),
                   ),
 
-                  // --- FIX: Dark Mode Switch ---
+                  // Dark Mode Switch ---
                   _buildMenuTile(
                     context,
                     icon: Icons.visibility_outlined,

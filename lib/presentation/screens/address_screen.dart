@@ -23,7 +23,9 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Address')),
+      appBar: AppBar(
+         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title:  Text('Address',style: TextStyle(color: Theme.of(context).iconTheme.color))),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(

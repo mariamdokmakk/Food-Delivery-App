@@ -1,68 +1,19 @@
-// import 'package:cls_tasks/widgets/constants.dart';
-// import 'package:cls_tasks/widgets/custom_offer_card.dart';
-// import 'package:flutter/material.dart';
-
-// class SpecialOffersScreen extends StatelessWidget {
-//   const SpecialOffersScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//          leading: IconButton(
-//           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-//           onPressed: () => Navigator.pop(context),
-//         ),
-//         backgroundColor: Colors.white,
-//         iconTheme: const IconThemeData(color: Colors.black),
-//         title: const Text(
-//           'Special Offers',
-//           style: TextStyle(color: Colors.black),
-//         ),
-//       ),
-//       body:ListView(
-//       padding: const EdgeInsets.all(5.0),
-//       children: [
-//         CustomOfferCard(
-//           bgColor: primaryGreen,
-//           offerImage: 'assets/images/special_offer.png',
-//           offerpercent: '30%',
-//         ),
-
-//         CustomOfferCard(
-//           offerImage: 'assets/images/desert.jpeg',
-//           offerpercent: '15%',
-//           bgColor: Colors.orange,
-//         ),
-
-//         CustomOfferCard(
-//           offerImage: 'assets/images/pizza.jpeg',
-//           offerpercent: '20%',
-//           bgColor: Colors.pinkAccent,
-//         ),
-//          CustomOfferCard(
-//           offerImage: 'assets/images/food.jpg',
-//           offerpercent: '20%',
-//           bgColor: Colors.blue,
-//         ),
-//       ],
-//     ),
-//     );
-
-
-//   }
-// }
-
 import 'package:flutter/material.dart';
-import '/data/models/offers_item.dart';
-import '/data/services/home_services.dart';
-import 'deleted/constants.dart';
-import '/presentation/widgets/custom_offer_card.dart';
-
-
+import '../../data/models/offers_item.dart';
+import '../../data/services/home_services.dart';
+import '../widgets/custom_offer_card.dart';
 
 class SpecialOffersScreen extends StatelessWidget {
-  const SpecialOffersScreen({super.key});
+  SpecialOffersScreen({super.key});
+
+  // Map categories to images
+  Map<String, String> categoryImages = {
+    'pizza': 'assets/images/PIzza.png',
+    'drinks': 'assets/images/Drinks.png',
+    'burger': 'assets/images/Burger.png',
+    'desert':'assets/images/Desert.png'
+
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +21,19 @@ class SpecialOffersScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         leading: IconButton(
-          icon:  Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.bodyMedium!.color),
+          icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.bodyMedium!.color),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Colors.white,
-        title: const Text('Special Offers', style: TextStyle(color: Colors.black)),
+        backgroundColor:Theme.of(context).scaffoldBackgroundColor,
+        title:  Text('Special Offers',style: TextStyle(color: Theme.of(context).iconTheme.color)),
       ),
-      body: StreamBuilder<List<OffersItem>>(
+      body: StreamBuilder<List<OffersItem?>>(
         stream: HomeServices.getOffers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return  Center(child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,));
+            return Center(
+              child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
+            );
           }
 
           if (snapshot.hasError) {
@@ -90,7 +43,12 @@ class SpecialOffersScreen extends StatelessWidget {
           final offers = snapshot.data ?? [];
 
           if (offers.isEmpty) {
-            return const Center(child: Text('No active offers right now.',style: TextStyle(color: Colors.black, fontSize: 14),));
+            return const Center(
+              child: Text(
+                'No active offers right now.',
+                style: TextStyle(color: Colors.black, fontSize: 14),
+              ),
+            );
           }
 
           return ListView.builder(
@@ -98,15 +56,18 @@ class SpecialOffersScreen extends StatelessWidget {
             itemCount: offers.length,
             itemBuilder: (context, index) {
               final offer = offers[index];
-              final item = offer.menu_item;
 
-              // You can also skip inactive or expired offers:
-              if (!offer.is_active) return const SizedBox.shrink();
+              if (offer == null || !offer.isActive) return const SizedBox.shrink();
+
+              // Pick image based on category, fallback to default
+              final image = categoryImages[offer.category.toLowerCase()] ??
+                  'assets/images/default.png';
 
               return CustomOfferCard(
-                offerImage: item.imageUrl,
-                offerpercent: '${offer.discount_percent}%',
+                offerImage: image,
+                offerpercent: '${offer.discountPercent}%',
                 bgColor: Theme.of(context).colorScheme.primary,
+                offerTitle: offer.title,
               );
             },
           );
@@ -115,3 +76,4 @@ class SpecialOffersScreen extends StatelessWidget {
     );
   }
 }
+

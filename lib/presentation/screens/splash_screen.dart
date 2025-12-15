@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '/presentation/screens/home_screen.dart';
 import '/presentation/screens/onboarding_screen.dart';
-import 'deleted/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -76,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
                   CircleAvatar(
                     radius: 40,
                     backgroundColor: Colors.white,
-                    child: Image.asset('assets/images/logo.jpg', height: 60),
+                    child: Image.asset('assets/images/logo.png', height: 60),
                   ),
                   // Image.asset(
                   //   'assets/images/logo.jpg',

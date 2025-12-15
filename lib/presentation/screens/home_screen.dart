@@ -1,406 +1,10 @@
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         leading: Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: FutureBuilder<String?>(
-//             future: UserServices.getUserName(),
-//             builder: (context, snapshot) {
-//               if (snapshot.connectionState == ConnectionState.waiting) {
-//                 return const CircleAvatar(
-//                   backgroundColor: primaryGreen,
-//                   child: CircularProgressIndicator(
-//                     color: Colors.white,
-//                     strokeWidth: 2,
-//                   ),
-//                 );
-//               }
-
-//               final name = snapshot.data ?? '';
-//               final firstChar = name.isNotEmpty ? name[0].toUpperCase() : '?';
-
-//               return CircleAvatar(
-//                 backgroundColor: primaryGreen,
-//                 child: Text(
-//                   firstChar,
-//                   style: const TextStyle(
-//                     color: Colors.white,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               );
-//             },
-//           ),
-//         ),
-
-//         title: const Text(
-//           'Deliver to',
-//           style: TextStyle(color: Colors.grey, fontSize: 24),
-//         ),
-//         actions: [
-//           Stack(
-//             children: [
-//               CircleAvatar(
-//                 backgroundColor: Colors.white,
-//                 radius: 20,
-//                 child: IconButton(
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => const NotificationPage(),
-//                       ),
-//                     );
-//                   },
-//                   icon: const Icon(
-//                     Icons.notifications_none_outlined,
-//                     color: Colors.black,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: 4,
-//                 child: Container(
-//                   padding: const EdgeInsets.all(6),
-//                   decoration: const BoxDecoration(
-//                     color: Colors.red,
-//                     shape: BoxShape.circle,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           SizedBox(width: 16),
-//           Stack(
-//             children: [
-//               CircleAvatar(
-//                 backgroundColor: Colors.white,
-//                 radius: 20,
-//                 child: IconButton(
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => const CardPage()),
-//                     );
-//                   },
-//                   icon: const Icon(
-//                     Icons.shopping_bag_outlined,
-//                     color: Colors.black,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: 4,
-//                 child: Container(
-//                   padding: const EdgeInsets.all(6),
-//                   decoration: const BoxDecoration(
-//                     color: Colors.red,
-//                     shape: BoxShape.circle,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(9),
-//         child: ListView(
-//           children: [
-//             TextField(
-//               cursorColor: Colors.grey,
-//               //onChanged: onSearchTextChange,
-//               decoration: InputDecoration(
-//                 prefixIcon: IconButton(
-//                   icon: Icon(Icons.search),
-//                   color: Colors.grey,
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => const SearchScreen(),
-//                       ),
-//                     );
-//                   },
-//                 ),
-//                 hintText: 'What are you craving?',
-//                 filled: true,
-//                 fillColor: Colors.grey.shade200,
-//                 border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(30),
-//                   borderSide: BorderSide.none,
-//                 ),
-//                 focusedBorder: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(30),
-//                   borderSide: const BorderSide(color: primaryGreen),
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-//             Row(
-//               children: [
-//                 Text(
-//                   'Special Offers',
-//                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                 ),
-//                 SizedBox(width: 180),
-//                 TextButton(
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => const SpecialOffersScreen(),
-//                       ),
-//                     );
-//                   },
-//                   child: Text('See All', style: TextStyle(color: primaryGreen)),
-//                 ),
-//               ],
-//             ),
-//             CustomOfferCard(
-//               bgColor: primaryGreen,
-//               offerImage: 'assets/images/special_offer.png',
-//               offerpercent: '30%',
-//             ),
-//             const SizedBox(height: 20),
-//             SingleChildScrollView(
-//               scrollDirection: Axis.horizontal,
-//               child: Row(
-//                 children: [
-//                   CustomCategory(
-//                     categoryImage: 'assets/images/burger_icon.png',
-//                     categoryName: 'Burger',
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) =>
-//                               const CategoryPage(categoryName: 'Burger'),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                   SizedBox(width: 50),
-//                   CustomCategory(
-//                     categoryImage: 'assets/images/pizza-icon.png',
-//                     categoryName: 'Pizza',
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) =>
-//                               const CategoryPage(categoryName: 'Pizza'),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                   SizedBox(width: 50),
-//                   CustomCategory(
-//                     categoryImage: 'assets/images/desser_icon.png',
-//                     categoryName: 'Dessert',
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) =>
-//                               const CategoryPage(categoryName: 'Dessert'),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                   SizedBox(width: 50),
-//                   CustomCategory(
-//                     categoryImage: 'assets/images/drink_icon.png',
-//                     categoryName: 'Drink',
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) =>
-//                               const CategoryPage(categoryName: 'Drink'),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(height: 30),
-
-//             // SizedBox(
-//             //   height: 280, // set an appropriate height for your food cards
-//             //   child: ListView.builder(
-//             //     scrollDirection: Axis.horizontal,
-//             //     itemCount: 6,
-//             //     itemBuilder: (context, index) {
-//             //       return CustomFoodCard();
-//             //     },
-//             //   ),
-//             // ),
-//             SingleChildScrollView(
-//               //scrollDirection: Axis.horizontal,
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   StreamBuilder<List<MenuItem>>(
-//                     stream: HomeServices.getMenuItems(),
-//                     builder: (context, snapshot) {
-//                       if (snapshot.connectionState == ConnectionState.waiting) {
-//                         return const Center(
-//                           child: CircularProgressIndicator(color: primaryGreen),
-//                         );
-//                       }
-
-//                       if (snapshot.hasError) {
-//                         return Center(child: Text('Error: ${snapshot.error}'));
-//                       }
-
-//                       final menuItems = snapshot.data ?? [];
-
-//                       if (menuItems.isEmpty) {
-//                         return const Center(child: Text('No menu items found'));
-//                       }
-
-//                       return SizedBox(
-//                         height: 280,
-//                         child: ListView.builder(
-//                           scrollDirection: Axis.horizontal,
-//                           itemCount: menuItems.length,
-//                           itemBuilder: (context, index) {
-//                             final item = menuItems[index];
-//                             return Padding(
-//                               padding: const EdgeInsets.only(left: 8.0),
-//                               child: CustomFoodCard(item: item),
-//                             );
-//                           },
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 ],
-//               ),
-//             ),
-
-//             Row(
-//               children: [
-//                 Text(
-//                   'Best Seller 😍',
-//                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                 ),
-//                 SizedBox(width: 190),
-//                 TextButton(
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => const RecommendedPage(),
-//                       ),
-//                     );
-//                   },
-//                   child: Text('See All', style: TextStyle(color: primaryGreen)),
-//                 ),
-//               ],
-//             ),
-//             // SingleChildScrollView(
-//             //   scrollDirection: Axis.horizontal,
-//             //   child: Row(
-//             //     children: [
-//             //       CustomerContainer(
-//             //         categoryImage: 'assets/images/icons8-checked.png',
-//             //         categoryName: 'All',
-//             //       ),
-//             //       const SizedBox(width: 24),
-//             //       CustomerContainer(
-//             //         categoryImage: 'assets/images/burger_icon.png',
-//             //         categoryName: 'Burger',
-//             //       ),
-//             //       const SizedBox(width: 24),
-//             //       CustomerContainer(
-//             //         categoryImage: 'assets/images/pizza-icon.png',
-//             //         categoryName: 'Pizza',
-//             //       ),
-//             //       const SizedBox(width: 24),
-//             //       CustomerContainer(
-//             //         categoryImage: 'assets/images/drink_icon.png',
-//             //         categoryName: 'Drink',
-//             //       ),
-//             //     ],
-//             //   ),
-//             // ),
-//             SizedBox(height: 30),
-//             const BestSellersSection(),
-
-//             // StreamBuilder<List<MenuItem>>(
-//             //   stream: HomeServices.getBestSellers(),
-//             //   builder: (context, snapshot) {
-//             //     if (snapshot.connectionState == ConnectionState.waiting) {
-//             //       return const Center(
-//             //         child: CircularProgressIndicator(color: primaryGreen),
-//             //       );
-//             //     }
-
-//             //     if (snapshot.hasError) {
-//             //       return Center(child: Text('Error: ${snapshot.error}'));
-//             //     }
-
-//             //     final bestSellers = snapshot.data ?? [];
-
-//             //     if (bestSellers.isEmpty) {
-//             //       return const Center(
-//             //         child: Text(
-//             //           'No best sellers yet!',
-//             //           style: TextStyle(color: Colors.black54, fontSize: 14),
-//             //         ),
-//             //       );
-//             //     }
-
-//             //     return SizedBox(
-//             //       height: 800,
-//             //       child: ListView.builder(
-//             //         shrinkWrap: true,
-//             //         physics: const NeverScrollableScrollPhysics(),
-//             //         itemCount: bestSellers.length,
-//             //         itemBuilder: (context, index) {
-//             //           final item = bestSellers[index];
-//             //           return Padding(
-//             //             padding: const EdgeInsets.only(bottom: 10),
-//             //             child: CustomMunueCard(
-//             //               foodImage: item.image_url,
-//             //               foodName: item.name,
-//             //               foodDetails: item.description,
-//             //               foodPrice: '\$${item.price.toStringAsFixed(2)}',
-//             //               menuItem: item,
-//             //             ),
-//             //           );
-//             //         },
-//             //       ),
-//             //     );
-//             //   },
-//             // ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../data/models/menu_item.dart';
+import '../../data/services/cart_services.dart';
 import '../../data/services/home_services.dart';
 import '../../logic/cubit/user_cubit.dart';
 import '../../logic/cubit/user_state.dart';
@@ -411,11 +15,12 @@ import '../../presentation/screens/notification_page.dart';
 import '../../presentation/screens/recommended_page.dart';
 import '../../presentation/screens/search_screen.dart';
 import '../../presentation/screens/special_offers_screen.dart';
-import '../../presentation/widgets/best_seller_section.dart';
+import '../../presentation/widgets/menu_section.dart';
 import '../../presentation/widgets/custom_offer_card.dart';
 import '../widgets/custom_category.dart';
 import '../widgets/custom_food_card.dart';
 import 'item_details_screen.dart';
+import 'menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -426,13 +31,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
          backgroundColor:Theme.of(context).scaffoldBackgroundColor,
         leading: Padding(
@@ -448,17 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (state is UserLoaded) {
                 final user = state.user;
-
                 return CircleAvatar(
+                  radius: 22,
+                  backgroundColor: Colors.grey.shade300,
                   backgroundImage: user.profileImage.isNotEmpty
                       ? NetworkImage(user.profileImage)
-                      : const AssetImage("assets/images/avatar.png")
-                  as ImageProvider,
+                      : null,
+                  child: user.profileImage.isEmpty
+                      ? const Icon(Icons.person, size: 26, color: Colors.white)
+                      : null,
                 );
               }
-
-              return const CircleAvatar(
-                backgroundImage: AssetImage("assets/images/avatar.png"),
+              return CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.grey,
+                child: Icon(Icons.person, color: Colors.white),
               );
             },
           ),
@@ -473,73 +85,88 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 24),
         ),
         actions: [
-          Stack(
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CircleAvatar(
-                backgroundColor:Theme.of(context).colorScheme.surface,
-                radius: 20.r,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NotificationPage(),
+              // Notification Icon
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    radius: 20.r,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationPage(),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.notifications_none_outlined,
+                        color: Theme.of(context).iconTheme.color,
                       ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.notifications_none_outlined,
-                    color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
-                ),
+
+                ],
               ),
-              Positioned(
-                top: 4.h,
-                child: Container(
-                  padding: EdgeInsets.all(6.w),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                ),
+              SizedBox(width: 12.w),
+
+              // Cart Icon with dynamic badge
+              ValueListenableBuilder<int>(
+                valueListenable: CartServices.cartCountNotifier,
+                builder: (context, count, _) {
+                  return Stack(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        radius: 20.r,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CartScreen()),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.shopping_bag_outlined,
+                            color: Theme.of(context).iconTheme.color,
+                          ),
+                        ),
+                      ),
+                      if (count > 0)
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            padding: EdgeInsets.all(5.w),
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              count.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                },
               ),
+              SizedBox(width: 10.w),
             ],
           ),
-          // SizedBox(width: 15.w),
-          Padding(
-            padding: EdgeInsetsGeometry.all(10.w),
-            child: Stack(
-              children: [
-                CircleAvatar(
-                  backgroundColor:Theme.of(context).colorScheme.surface,
-                  radius: 20.r,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const CartScreen()),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.shopping_bag_outlined,
-                       color: Theme.of(context).iconTheme.color,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 4.h,
-                  child: Container(
-                    padding: EdgeInsets.all(6.w),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
+
+
       ),
       body: Padding(
         padding: EdgeInsets.all(9.w), 
@@ -598,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -608,14 +235,15 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: CustomOfferCard(
                 bgColor: Theme.of(context).colorScheme.primary,
-                offerImage: 'assets/images/special_offer.png',
-                offerpercent: '30%',
-              ),
+                offerImage: 'assets/images/default.png', // any static banner image
+                offerpercent: 'Offers!',
+                offerTitle: 'Special Offers',   ),
             ),
-            SizedBox(height: screenHeight * 0.02), 
+            SizedBox(height: screenHeight * 0.02),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisSize:MainAxisSize.max,
                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                 children: [
                   CustomCategory(
@@ -746,8 +374,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
+            SizedBox(height: screenHeight * 0.03 ,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
                 Text(
                   'Menu',
                   style: TextStyle(
@@ -755,11 +386,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MenuScreen(),
+                      ),
+                    );
+                  },
+                  child: Text('See All', style: TextStyle(color:Theme.of(context).colorScheme.primary),),
+                ),
 
               ],
             ),
-            SizedBox(height: screenHeight * 0.03),
-            BestSellersSection()
+            SizedBox(height: screenHeight * 0.01 ,),
+            MenuSection()
 
           ],
         ),

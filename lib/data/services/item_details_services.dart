@@ -20,14 +20,14 @@ class ItemDetailsServices {
       final currentQuantity = existingDoc['quantity'] ?? 0;
       await cartItem.update({
         'quantity': currentQuantity + quantity,
-        'price': menuItem.price * (currentQuantity + quantity),
+        'price': menuItem.finalPrice * (currentQuantity + quantity),
       });
     } else {
       await cartItem.set({
         'id': menuItem.id,
         'name': menuItem.name,
         'quantity': quantity,
-        'price': menuItem.price * quantity,
+        'price': menuItem.finalPrice * quantity,
         'imageUrl': menuItem.imageUrl,
         'note': note,
       });

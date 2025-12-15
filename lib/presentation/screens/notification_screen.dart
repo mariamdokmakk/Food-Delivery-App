@@ -33,7 +33,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              _buildSwitchTile('General Notification', _generalNotification, (val) {
+              _buildSwitchTile('General Notification', _generalNotification, (
+                val,
+              ) {
                 setState(() => _generalNotification = val);
               }),
               _buildSwitchTile('Sound', _sound, (val) {
@@ -60,7 +62,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               _buildSwitchTile('App Updates', _appUpdates, (val) {
                 setState(() => _appUpdates = val);
               }),
-              _buildSwitchTile('New Service Available', _newServiceAvailable, (val) {
+              _buildSwitchTile('New Service Available', _newServiceAvailable, (
+                val,
+              ) {
                 setState(() => _newServiceAvailable = val);
               }),
               _buildSwitchTile('New Tips Available', _newTipsAvailable, (val) {
@@ -78,10 +82,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       contentPadding: EdgeInsets.zero,
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
       ),
       trailing: Switch(
         value: value,

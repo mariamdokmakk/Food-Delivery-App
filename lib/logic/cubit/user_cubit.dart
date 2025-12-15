@@ -46,8 +46,8 @@ class UserCubit extends Cubit<UserState> {
             phone: "",
             email: "No email",
           profileImage: "",
-          latitude: 0.0,
-          longitude: 0.0,
+          // latitude: 0.0,
+          // longitude: 0.0,
           // gender: "Male",
         );
         emit(UserLoaded(emptyUser));

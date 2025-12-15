@@ -15,7 +15,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Language'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text('Language',style: TextStyle(color: Theme.of(context).iconTheme.color)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

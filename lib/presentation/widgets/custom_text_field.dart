@@ -1,11 +1,5 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-
-
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final IconData? prefixIcon;

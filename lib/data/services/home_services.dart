@@ -11,15 +11,6 @@ class HomeServices {
   static const String userCollection = "users";
   // static const String favCollection = "Favourites";
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  //create fuction to load all offers
-
-  // static Stream<List<MenuItem>> getOffers() {
-  //   final queryStream = _db.collection(offersCollection).snapshots();
-  //   return queryStream.map((snapshot) {
-  //     return snapshot.docs.map((doc) => MenuItem.fromMap(doc.data())).toList();
-  //   });
-  // }
   static Stream<List<OffersItem>> getOffers() {
     return _db.collection(offersCollection).snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
@@ -37,7 +28,7 @@ class HomeServices {
         .doc(restaurantId)
         .collection('menu')
         .orderBy('totalOrderCount', descending: true)
-        .limit(10)
+        .limit(5) //should be 10 but for test it changed to 1
         .snapshots();
 
     return queryStream.map((snapshot) {
@@ -76,19 +67,4 @@ class HomeServices {
     );
   }
 
-  //favoutrite handling
-  // Future<void> handleFav(MenuItem menuItem) async {
-  //   final favItem = _db
-  //       .collection(userCollection)
-  //       .doc(UserServices.getCurrentUser())
-  //       .collection(favCollection)
-  //       .doc(menuItem.id);
-  //
-  //   final existingDoc = await favItem.get();
-  //   if (existingDoc.exists) {
-  //     favItem.delete();
-  //   } else {
-  //     await favItem.set(menuItem.toMap());
-  //   }
-  // }
 }

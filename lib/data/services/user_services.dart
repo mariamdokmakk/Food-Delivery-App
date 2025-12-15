@@ -2,31 +2,29 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '/data/models/user.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class UserServices {
-//create user
-//update user
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-static final FirebaseFirestore _db = FirebaseFirestore.instance;
-static final FirebaseAuth _auth = FirebaseAuth.instance;
+  // 🔹 Cloudinary config
+  static const String _cloudName = "dwhyg24zo";
+  static const String _uploadPreset = "ml_default";
 
-//creat user and update and save this in firestore
-
-   static Future<void> createUser(AppUser user) async {
+  /// Create or update user in Firestore
+  static Future<void> createUser(AppUser user) async {
     final userDoc = _db.collection("users").doc(_auth.currentUser!.uid);
     user.id = userDoc.id;
-    //updates exist doc or create new if not found
-    await userDoc.set(user.toMap(),SetOptions(merge: true));
+
+    await userDoc.set(user.toMap(), SetOptions(merge: true));
   }
 
-
-   static String getCurrentUser() {
+  static String getCurrentUser() {
     return FirebaseAuth.instance.currentUser!.uid;
   }
-
 
   static Future<String?> getUserName() async {
     final uid = _auth.currentUser?.uid;
@@ -39,18 +37,33 @@ static final FirebaseAuth _auth = FirebaseAuth.instance;
     return null;
   }
 
-  static Future<String?> uploadProfileImage(File imageFile) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child("users")
-        .child(uid)
-        .child("profile.jpg");
-
-    await ref.putFile(imageFile);
-    return await ref.getDownloadURL();
+  /// 🔹 Save profile image URL to Firestore
+  static Future<void> updateProfileImage(String imageUrl) async {
+    final uid = _auth.currentUser!.uid;
+    await _db.collection("users").doc(uid).update({"image": imageUrl});
   }
 
+  /// 🔹 Upload profile image to Cloudinary
+  /// Upload profile image to Cloudinary
+  static Future<String?> uploadProfileImage(File imageFile) async {
+    try {
+      final uri = Uri.parse(
+        "https://api.cloudinary.com/v1_1/$_cloudName/image/upload",
+      );
+      final request = http.MultipartRequest("POST", uri)
+        ..fields["upload_preset"] = _uploadPreset
+        ..fields["folder"] = "users/${_auth.currentUser!.uid}"
+        ..files.add(await http.MultipartFile.fromPath("file", imageFile.path));
 
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final data = json.decode(responseBody);
+
+      if (response.statusCode == 200) return data["secure_url"];
+      return null;
+    } catch (e) {
+      print("Cloudinary upload error: $e");
+      return null;
+    }
+  }
 }

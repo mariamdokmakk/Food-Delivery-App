@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/presentation/screens/deleted/fill_profile_screen.dart';
 import '/presentation/widgets/show_snak_bar.dart';
 import '/presentation/screens/main_home_screen.dart';
 import '/presentation/screens/register_page.dart';
-import 'deleted/constants.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(30),
-                  child: Image.asset("assets/images/logo.jpg", height: 80),
+                  child: Image.asset("assets/images/logo.png", height: 80),
                 ),
                 Center(
                   child: const Text(

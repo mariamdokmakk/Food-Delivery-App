@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../screens/deleted/constants.dart';
-
 class CustomerContainer extends StatelessWidget {
   final String categoryImage;
   final String categoryName;

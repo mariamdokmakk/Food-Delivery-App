@@ -7,13 +7,14 @@ class PaymentMethodsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment Methods'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text('Payment Methods',style: TextStyle(color: Theme.of(context).iconTheme.color),),
         actions: [
           IconButton(
             onPressed: () {
               // TODO: Open Card Scanner
             },
-            icon: const Icon(Icons.qr_code_scanner),
+            icon: Icon(Icons.qr_code_scanner,color: Theme.of(context).iconTheme.color),
           ),
         ],
       ),
@@ -45,12 +46,12 @@ class PaymentMethodsScreen extends StatelessWidget {
                 icon: Icons.g_mobiledata, // Placeholder icon
                 iconColor: Colors.red,
               ),
-              const SizedBox(height: 16),
+               SizedBox(height: 16),
               _buildPaymentTile(
                 context,
                 name: 'Apple Pay',
                 icon: Icons.apple,
-                iconColor: Colors.black,
+                iconColor: Theme.of(context).iconTheme.color!,
               ),
               const SizedBox(height: 16),
               _buildPaymentTile(
@@ -83,7 +84,7 @@ class PaymentMethodsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

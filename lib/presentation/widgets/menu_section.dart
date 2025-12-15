@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import '../screens/item_details_screen.dart';
 import '/data/models/menu_item.dart';
 import '/data/services/home_services.dart';
-import '../screens/deleted/constants.dart';
 import '/presentation/widgets/custom_munue_card.dart';
 import '/presentation/widgets/customer_container.dart';
 
-class BestSellersSection extends StatefulWidget {
-  const BestSellersSection({super.key});
+class MenuSection extends StatefulWidget {
+  const MenuSection({super.key});
 
   @override
-  State<BestSellersSection> createState() => _BestSellersSectionState();
+  State<MenuSection> createState() => _MenuSectionState();
 }
 
-class _BestSellersSectionState extends State<BestSellersSection> {
+class _MenuSectionState extends State<MenuSection> {
   String selectedCategory = 'All';
 
   @override
@@ -35,19 +35,19 @@ class _BestSellersSectionState extends State<BestSellersSection> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(width: 10),
+              const SizedBox(width: 2),
               _buildCategoryItem('assets/images/icons8-checked.png', 'All'),
-              const SizedBox(width: 24),
+              const SizedBox(width: 22),
               _buildCategoryItem('assets/images/burger_icon.png', 'Burger'),
-              const SizedBox(width: 24),
+              const SizedBox(width: 22),
               _buildCategoryItem('assets/images/pizza-icon.png', 'Pizza'),
-              const SizedBox(width: 24),
+              const SizedBox(width: 22),
               _buildCategoryItem('assets/images/drink_icon.png', 'Drink'),
             ],
           ),
         ),
-        const SizedBox(height: 30),
-
+        // const SizedBox(height: 30),
+        SizedBox(height: 5),
         // 🔹 Firestore StreamBuilder
         StreamBuilder<List<MenuItem>>(
           stream: stream,
@@ -87,8 +87,17 @@ class _BestSellersSectionState extends State<BestSellersSection> {
                     foodDetails: item.description,
                     foodPrice: '\$${item.price.toStringAsFixed(2)}',
                     menuItem: item,
+                    onTap: () {   // <-- Add this
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => itemDetailsScreen(menuItem: item),
+                        ),
+                      );
+                    },
                   ),
                 );
+
               },
             );
           },
