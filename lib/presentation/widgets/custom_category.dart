@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-// ignore: must_be_immutable
 class CustomCategory extends StatelessWidget {
   CustomCategory({
     super.key,
@@ -19,7 +17,6 @@ class CustomCategory extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(categoryImage, height: 50),
-
           Text(
             categoryName,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

@@ -54,6 +54,10 @@ dependencies:
   firebase_storage: ^13.0.4
   nominatim_flutter: ^0.0.8
   http: ^1.6.0
+  fake_cloud_firestore: ^4.0.0
+  firebase_auth_mocks: ^0.15.1
+  firebase_storage_mocks: ^0.8.0+1
+  bloc_test: ^9.1.5
 
 dev_dependencies:
   flutter_test:

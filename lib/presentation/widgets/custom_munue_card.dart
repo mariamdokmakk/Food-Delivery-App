@@ -30,7 +30,8 @@ class CustomMunueCard extends StatefulWidget {
 }
 
 class _CustomMunueCardState extends State<CustomMunueCard> {
-  bool _isNetworkImage(String path) {
+  bool _isNetworkImage(String? path) {
+    if (path == null || path.isEmpty) return false;
     final lower = path.toLowerCase();
     return lower.startsWith('http://') || lower.startsWith('https://');
   }
@@ -60,7 +61,7 @@ class _CustomMunueCardState extends State<CustomMunueCard> {
       );
     } else {
       imageWidget = Image.asset(
-        widget.foodImage,
+        'assets/images/food.png',
         width: 120,
         height: 120,
         fit: BoxFit.cover,
